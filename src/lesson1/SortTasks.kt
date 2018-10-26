@@ -2,6 +2,8 @@
 
 package lesson1
 
+import java.io.File
+
 /**
  * Сортировка времён
  *
@@ -31,7 +33,16 @@ package lesson1
  * В случае обнаружения неверного формата файла бросить любое исключение.
  */
 fun sortTimes(inputName: String, outputName: String) {
-    TODO()
+    val format = Regex("""[0-2]\d:[0-6]\d:[0-6]\d""")
+    val result = mutableListOf<String>()
+
+    for (line in File(inputName).readLines()) {
+        if (line.isEmpty()) continue
+        if (!line.matches(format)) {
+            throw IllegalArgumentException()
+        }
+        result.add(line.filter { it != ':' })
+    }
 }
 
 /**
