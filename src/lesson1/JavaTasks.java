@@ -2,6 +2,11 @@ package lesson1;
 
 import kotlin.NotImplementedError;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+
 @SuppressWarnings("unused")
 public class JavaTasks {
     /**
@@ -96,8 +101,23 @@ public class JavaTasks {
      * 99.5
      * 121.3
      */
-    static public void sortTemperatures(String inputName, String outputName) {
-        throw new NotImplementedError();
+    static public void sortTemperatures(String inputName, String outputName) throws Exception {
+        ArrayList<Double> temperatures = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(inputName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                temperatures.add(Double.parseDouble(line));
+            }
+        }
+        Collections.sort(temperatures);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputName))) {
+            for (Double temp : temperatures) {
+                bw.write(String.valueOf(temp));
+                bw.newLine();
+            }
+
+        }
+
     }
 
     /**
@@ -129,9 +149,44 @@ public class JavaTasks {
      * 2
      * 2
      */
-    static public void sortSequence(String inputName, String outputName) {
-        throw new NotImplementedError();
+    static public void sortSequence(String inputName, String outputName) throws Exception {
+        Map<Integer, Integer> map = new HashMap<>();
+        List<Integer> digits = new ArrayList<>();
+        int num;
+        int thisCount;
+        int maxValueOfCount = 0;
+        int maxNumberOfCount = Integer.MIN_VALUE;
+        try (BufferedReader br = new BufferedReader(new FileReader(inputName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                num = Integer.parseInt(line);
+                digits.add(num);
+                map.merge(num, 1, ((a, b) -> a + b));
+                thisCount = map.get(num);
+                if (thisCount > maxValueOfCount || (thisCount == maxValueOfCount && num < maxNumberOfCount)) {
+                    maxValueOfCount = thisCount;
+                    maxNumberOfCount = num;
+                }
+            }
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputName))) {
+            for (Integer i : digits) {
+                if (i != maxNumberOfCount) {
+                    bw.write(String.valueOf(i));
+                    bw.newLine();
+                }
+            }
+            int i = 0;
+            while (i < maxValueOfCount) {
+                bw.write(String.valueOf(maxNumberOfCount));
+                bw.newLine();
+                i++;
+            }
+            bw.close();
+        }
     }
+
+
 
     /**
      * Соединить два отсортированных массива в один
@@ -147,6 +202,7 @@ public class JavaTasks {
      * <p>
      * Результат: second = [1 3 4 9 9 13 15 20 23 28]
      */
+
     static <T extends Comparable<T>> void mergeArrays(T[] first, T[] second) {
         int i = 0;
         int stopLength = 0;

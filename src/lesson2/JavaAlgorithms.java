@@ -150,8 +150,26 @@ public class JavaAlgorithms {
      * Справка: простым считается число, которое делится нацело только на 1 и на себя.
      * Единица простым числом не считается.
      */
-    static public int calcPrimesNumber(int limit) {
-        throw new NotImplementedError();
+    private static boolean isPrime(int num) {
+        int i = 2;
+        while (i < num) {
+            if (num % i == 0) return false;
+            i++;
+        }
+        return true;
+    }
+
+    static public int calcPrimesNumber(int limit) throws Exception {
+        if (limit <= 1) return 0;
+        int result = 0;
+        int i = 2;
+        while (i <= limit) {
+            if (isPrime(i)) {
+                result++;
+            }
+            i++;
+        }
+        return result;
     }
 
     /**
