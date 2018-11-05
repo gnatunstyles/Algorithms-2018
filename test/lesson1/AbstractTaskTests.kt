@@ -2,6 +2,8 @@ package lesson1
 
 import java.io.BufferedWriter
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
 import java.util.*
 import kotlin.math.abs
 
@@ -98,6 +100,14 @@ abstract class AbstractTaskTests : AbstractFileTests() {
         } finally {
             File("temp.txt").delete()
         }
+        try {
+            sortTemperatures("input/temp_in2.txt", "temp.txt")
+        } catch (e: FileNotFoundException) {
+        }
+        try {
+            sortTemperatures("input/temp_in3.txt", "temp.txt")
+        } catch (e: IOException) {
+        }
 
         fun testGeneratedTemperatures(size: Int) {
             try {
@@ -113,7 +123,9 @@ abstract class AbstractTaskTests : AbstractFileTests() {
             }
         }
         testGeneratedTemperatures(10)
+        testGeneratedTemperatures(100)
         testGeneratedTemperatures(500)
+        testGeneratedTemperatures(1000)
     }
 
     protected fun sortSequence(sortSequence: (String, String) -> Unit) {
@@ -150,7 +162,10 @@ abstract class AbstractTaskTests : AbstractFileTests() {
         } finally {
             File("temp.txt").delete()
         }
-
+        try {
+            sortSequence("input/seq_in3.txt", "temp.txt")
+        } catch (e: IOException) {
+        }
         fun BufferedWriter.writeNumbers(numbers: List<Int>) {
             for (n in numbers) {
                 write("$n")

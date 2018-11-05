@@ -101,7 +101,7 @@ public class JavaTasks {
      * 99.5
      * 121.3
      */
-    static public void sortTemperatures(String inputName, String outputName) throws Exception {
+    static public void sortTemperatures(String inputName, String outputName) throws  Exception {
         ArrayList<Double> temperatures = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(inputName))) {
             String line;
@@ -185,7 +185,6 @@ public class JavaTasks {
             bw.close();
         }
     }
-
 
 
     /**
