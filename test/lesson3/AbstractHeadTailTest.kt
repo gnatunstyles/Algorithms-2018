@@ -35,8 +35,21 @@ abstract class AbstractHeadTailTest {
         assertEquals(false, set.contains(9))
         assertEquals(false, set.contains(10))
 
+        set = tree.headSet(7)
+        assertEquals(6, set.size)
+        assertEquals(true, set.contains(1))
+        assertEquals(true, set.contains(2))
+        assertEquals(true, set.contains(3))
+        assertEquals(true, set.contains(4))
+        assertEquals(true, set.contains(5))
+        assertEquals(true, set.contains(6))
+        assertEquals(false, set.contains(7))
+        assertEquals(false, set.contains(8))
+        assertEquals(false, set.contains(9))
+        assertEquals(false, set.contains(10))
 
-        set = tree.headSet(127)
+
+        set = tree.headSet(120)
         for (i in 1..10)
             assertEquals(true, set.contains(i))
 
@@ -55,7 +68,22 @@ abstract class AbstractHeadTailTest {
         assertEquals(true, set.contains(9))
         assertEquals(true, set.contains(10))
 
-        set = tree.tailSet(-128)
+
+        set = tree.tailSet(7)
+        assertEquals(4, set.size)
+        assertEquals(false, set.contains(1))
+        assertEquals(false, set.contains(2))
+        assertEquals(false, set.contains(3))
+        assertEquals(false, set.contains(4))
+        assertEquals(false, set.contains(5))
+        assertEquals(false, set.contains(6))
+        assertEquals(true, set.contains(7))
+        assertEquals(true, set.contains(8))
+        assertEquals(true, set.contains(9))
+        assertEquals(true, set.contains(10))
+
+
+        set = tree.tailSet(-120)
         for (i in 1..10)
             assertEquals(true, set.contains(i))
 
