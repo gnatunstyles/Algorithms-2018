@@ -30,6 +30,7 @@ class GraphBuilder {
         vertices[v.name] = v
     }
 
+
     fun addVertex(name: String): Vertex {
         return VertexImpl(name).apply {
             addVertex(this)
@@ -41,6 +42,10 @@ class GraphBuilder {
         connections[begin] = connections[begin]?.let { it + edge } ?: setOf(edge)
         connections[end] = connections[end]?.let { it + edge } ?: setOf(edge)
     }
+
+    fun getVertex(v: Vertex) =
+            vertices[v.name]
+
 
     fun build(): Graph = object : Graph {
 
