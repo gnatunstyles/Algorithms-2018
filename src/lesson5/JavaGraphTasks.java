@@ -67,8 +67,8 @@ public class JavaGraphTasks {
      * <p>
      * <p>
      * <p>
-     * Трудоемкость = O(V), где V - количество вершин графа
-     * Ресурсоемкость = O(V)
+     * Трудоемкость = O(N), где N - количество вершин графа
+     * Ресурсоемкость = O(N)
      */
     public static Graph minimumSpanningTree(Graph graph) {
         LinkedList<Graph.Vertex> list = new LinkedList<>();
@@ -110,9 +110,31 @@ public class JavaGraphTasks {
      * В данном случае ответ (A, E, F, D, G, J)
      * <p>
      * Эта задача может быть зачтена за пятый и шестой урок одновременно
+     * Трудоемкость = О(N)
+     * // Ресурсоемкость = О(N)
      */
     public static Set<Graph.Vertex> largestIndependentVertexSet(Graph graph) {
-        throw new NotImplementedError();
+        Set<Graph.Vertex> child = new HashSet<>();
+        Set<Graph.Vertex> grandChild = new HashSet<>();
+        Set<Graph.Edge> connections = graph.getEdges();
+        for (Graph.Edge edge : connections) {
+            Graph.Vertex begin = edge.getBegin();
+            Graph.Vertex end = edge.getEnd();
+            if (child.isEmpty() ||
+                    !grandChild.contains(begin)) {
+                child.add(begin);
+                grandChild.add(end);
+            }
+            if (grandChild.contains(begin) &&
+                    !child.contains(end)) {
+                child.add(end);
+            }
+            if (child.contains(begin) &&
+                    !grandChild.contains(end)) {
+                grandChild.add(end);
+            }
+        }
+        return grandChild.size() > child.size() ? grandChild : child;
     }
 
     /**
@@ -134,8 +156,8 @@ public class JavaGraphTasks {
      * J ------------ K
      * <p>
      * Ответ: A, E, J, K, D, C, H, G, B, F, I
-     * Трудоемкость = O(V!), где V - количество вершин графа
-     * Ресурсоемкость = O(V!)
+     * Трудоемкость = O(N!), где N - количество вершин графа
+     * Ресурсоемкость = O(N!)
      */
     public static Path longestSimplePath(Graph graph) {
         if (graph == null) return null;
@@ -146,6 +168,7 @@ public class JavaGraphTasks {
         for (Graph.Vertex vertex : verticesList) {
             list.add(new Path(vertex));
         }
+        if (list.isEmpty()) return null;
         while (!list.isEmpty()) {
             Path path = list.remove();
             if (path.getLength() > length) {
@@ -162,6 +185,5 @@ public class JavaGraphTasks {
         }
         return longestPath;
     }
-    // Трудоемкость: O(n!)
-    // Ресурсоемкость: O(n!)
+
 }
